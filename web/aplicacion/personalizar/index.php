@@ -7,32 +7,50 @@ $barra=[
         "ENLACE"=>"/index.php"
     ],
     [
-        "TEXTO"=>"index"
+        "TEXTO"=>"visualización colores"
     ]
 ];
 
+/* ====== CONTADOR VISITAS ====== */
+$visitas = setCookieVisitas();
+
+if(isset($_COOKIE["visitas"]))
+{
+    $visitas++;
+    generarCookie("visitas", $visitas);
+}
+
+/* ====== ESTILOS POR DEFECTO ====== */
+$estilos = setCookiesColores();
+
 //dibuja la plantilla de la vista
-inicioCabecera("Inicio");
-cabecera();
+inicioCabecera("visualizacion colores");
+cabecera($estilos);
 finCabecera();
-inicioCuerpo("INICIO", $barra);
-cuerpo();  //llamo a la vista
+inicioCuerpo("VISUALIZACIÓN COLORES", $barra);
+cuerpo($visitas);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
 //vista
-function cabecera() 
+function cabecera(array $estilos) 
 {
     ?>
-    <!--Esto va en el head-->
+    <style>
+        #documento {
+            color: <?php echo $estilos["texto"] ?>;
+            background-color: <?php echo $estilos["fondo"] ?>;
+        }
+    </style>
     <?php
 }
 
 //vista
-function cuerpo()
+function cuerpo(int $visitas)
 {
 ?>
     <br><br>
+    <h2>Visitas del usuario a esta página: <?php echo $visitas ?></h2>
 <?php
 }
 

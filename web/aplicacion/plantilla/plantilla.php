@@ -1,6 +1,6 @@
 <?php
 
-function paginaError($mensaje)
+function paginaError(string $mensaje)
 {
   header("HTTP/1.0 404 $mensaje");
   inicioCabecera("PRACTICA");
@@ -15,7 +15,7 @@ function paginaError($mensaje)
   finCuerpo();  
 }
 
-function inicioCabecera($titulo)
+function inicioCabecera(string $titulo)
 {
 ?>
 <!DOCTYPE html>
@@ -116,7 +116,7 @@ function finCuerpo()
                 <div>
                     &copy; Copyright by Juange
                     <?php
-                    echo " - " . date("d/m/Y H:i:s"); 
+                    echo " - " . date("d/m/Y"); 
                     ?>
                 </div>
             </footer>
