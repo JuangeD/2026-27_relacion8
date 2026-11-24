@@ -120,7 +120,7 @@
          */
         function existeRole(int $codRole):bool
         {
-            
+            return false;
         }
 
         /**
@@ -147,7 +147,7 @@
          */
         function getPermisoRole(int $codRole, int $numero): bool
         {
-              
+            return false;
         }
 
         /**
@@ -175,7 +175,7 @@
 
             //la contraseña la guardo encriptada
 			//establecer el método
-            $contrasena= método encriptado;
+            $contrasena="método encriptado";
 
             //busco cual es el ultimo codigo
             $cont=0;
@@ -234,7 +234,7 @@
          */
         function existeCodUsuario(int $codUsuario):bool
         {
-            
+            return false;
         }
 
         /**
@@ -246,7 +246,7 @@
          */
         function existeUsuario(string $nick):bool
         {
-               
+            return false;
         }
 
         /**
@@ -270,7 +270,7 @@
             $codigo=$this->getCodUsuario($nick);
             
 			//establecer el metodo de encriptado
-            $contrasena= metodo de encriptado;
+            $contrasena= "metodo de encriptado";
 
             if ($this->_usuarios[$codigo]["contrasenia"]!=$contrasena)
                  return false;
@@ -289,7 +289,7 @@
          */
         function getPermiso(int $codUsuario, int $numero):bool
         {
-
+            return false;
         }
 
         /**
@@ -302,7 +302,7 @@
         function getPermisos(int $codUsuario):array|false
         {
 
-
+            return false;
         }
 
         /**
@@ -330,7 +330,7 @@
         function getBorrado(int $codUsuario):bool
         {
 
-
+            return false;
         }
 
         /**
@@ -376,7 +376,7 @@
         function setContrasenia(int $codUsuario, string $contrasenia):bool
         {
 
-
+            return false;
         }
 
         /**
@@ -410,7 +410,7 @@
         function setUsuarioRole(int $codUsuario, int $role):bool
         {
  
-
+            return false;
         }
 
         /**
@@ -421,7 +421,7 @@
          */
         function dameUsuarios():array
         {
-
+            return [];
         }
 
         /**
