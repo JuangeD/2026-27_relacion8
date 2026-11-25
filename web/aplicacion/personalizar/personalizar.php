@@ -22,7 +22,7 @@ if(isset($_POST["guardarCambios"]))
         if(validaRango($_POST["color-texto"], COLORESTEXTO, 2))
         {
             $estilos["texto"]=$_POST["color-texto"];
-            generarCookie("texto", $_POST["color-texto"]);
+            generarCookie("texto", $_POST["color-texto"], expiracionCookie(), "/aplicacion/personalizar");
         }
             
 
@@ -31,7 +31,7 @@ if(isset($_POST["guardarCambios"]))
         if(validaRango($_POST["color-fondo"], COLORESFONDO, 2))
         {
             $estilos["fondo"]=$_POST["color-fondo"];
-            generarCookie("fondo", $_POST["color-fondo"]);
+            generarCookie("fondo", $_POST["color-fondo"], expiracionCookie(), "/aplicacion/personalizar");
         }
 }
 

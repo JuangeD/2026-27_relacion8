@@ -17,7 +17,7 @@ $visitas = setCookieVisitas();
 if(isset($_COOKIE["visitas"]))
 {
     $visitas++;
-    generarCookie("visitas", $visitas);
+    generarCookie("visitas", $visitas, expiracionCookie(), "/aplicacion/personalizar/index.php");
 }
 
 /* ====== ESTILOS POR DEFECTO ====== */
@@ -51,6 +51,7 @@ function cuerpo(int $visitas)
 ?>
     <br><br>
     <h2>Visitas del usuario a esta página: <?php echo $visitas ?></h2>
+    <p>En esta página se pueden visualizar los estilos aplicados</p>
 <?php
 }
 

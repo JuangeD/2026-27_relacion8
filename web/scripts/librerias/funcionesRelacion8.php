@@ -27,14 +27,14 @@ function setCookiesColores(): array
     if(isset($_COOKIE["fondo"]))
         if(validaRango($_COOKIE["fondo"], COLORESFONDO, 2))
             $estilos["fondo"]=$_COOKIE["fondo"];
-    else    
-        setcookie("fondo", "white", expiracionCookie(), "/");
+    else
+        generarCookie("fondo", "white", expiracionCookie(), "/aplicacion/personalizar");
 
     if(isset($_COOKIE["texto"]))
         if(validaRango($_COOKIE["texto"], COLORESTEXTO, 2))
             $estilos["texto"]=$_COOKIE["texto"];
-    else    
-        setcookie("texto", "black", expiracionCookie(), "/");
+    else
+        generarCookie("texto", "black", expiracionCookie(), "/aplicacion/personalizar");
 
     return $estilos;
 }
@@ -52,7 +52,7 @@ function setCookieVisitas(): int
     if(isset($_COOKIE["visitas"]))
         $visitas=$_COOKIE["visitas"];
     else
-        setcookie("visitas", 0, expiracionCookie(), "/");
+        generarCookie("visitas", $visitas, expiracionCookie(), "/aplicacion/personalizar/index.php");
 
     return $visitas;
 }
