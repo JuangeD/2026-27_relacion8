@@ -66,6 +66,7 @@ function inicioCuerpo(string $cabecera, array $ubicacion=[])
             </div>
             <nav class="barraMenu">
                 <ul>
+                    <li><a href="/aplicacion/texto/verTextos.php">Pag. textos</a></li>
                     <li><a href="/aplicacion/personalizar/index.php">Visualizar colores</a></li>
                     <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
                  </ul> 
