@@ -14,12 +14,6 @@ $barra=[
 /* ====== CONTADOR VISITAS ====== */
 $visitas = setCookieVisitas();
 
-if(isset($_COOKIE["visitas"]))
-{
-    $visitas++;
-    generarCookie("visitas", $visitas, expiracionCookie(), "/aplicacion/personalizar/index.php");
-}
-
 /* ====== ESTILOS POR DEFECTO ====== */
 $estilos = setCookiesColores();
 

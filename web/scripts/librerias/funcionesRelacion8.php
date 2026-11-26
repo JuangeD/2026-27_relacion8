@@ -50,7 +50,10 @@ function setCookieVisitas(): int
     $visitas = 1;
 
     if(isset($_COOKIE["visitas"]))
-        $visitas=$_COOKIE["visitas"];
+    {
+        $visitas=++$_COOKIE["visitas"];
+        generarCookie("visitas", $visitas, expiracionCookie(), "/aplicacion/personalizar/index.php");
+    }
     else
         generarCookie("visitas", $visitas, expiracionCookie(), "/aplicacion/personalizar/index.php");
 

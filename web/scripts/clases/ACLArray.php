@@ -147,12 +147,12 @@
          */
         function getPermisoRole(int $codRole, int $numero): bool
         {
-            $encontrado = false;
+            $permiso = false;
 
-            if($this->_roles[$codRole]['permisos'][$numero])
-                $encontrado=true;
+            if(isset($this->_roles[$codRole]['permisos'][$numero]))
+                $permiso=$this->_roles[$codRole]['permisos'][$numero];
 
-            return $encontrado;
+            return $permiso;
         }
 
         /**
@@ -278,11 +278,8 @@
 
             //recojo cual es el codigo
             $codigo=$this->getCodUsuario($nick);
-            
-			//establecer el metodo de encriptado
-            $contrasena= "metodo de encriptado";
 
-            if ($this->_usuarios[$codigo]["contrasenia"]!=$contrasena)
+            if (!password_verify($contrasena, $this->_usuarios[$codigo]["contrasenia"]))
                  return false;
                 
             // es valido
@@ -317,8 +314,10 @@
          */
         function getPermisos(int $codUsuario):array|false
         {
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
 
-            return false;
+            return $this->_roles[$this->_usuarios[$codUsuario]['cod_role']]['permisos'];
         }
 
         /**
@@ -345,8 +344,7 @@
          */
         function getBorrado(int $codUsuario):bool
         {
-
-            return false;
+            return $this->existeCodUsuario($codUsuario);
         }
 
         /**
@@ -392,7 +390,12 @@
         function setContrasenia(int $codUsuario, string $contrasenia):bool
         {
 
-            return false;
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
+
+            $this->_usuarios[$codUsuario]['contrasenia'] = password_hash($contrasenia, PASSWORD_BCRYPT);
+
+            return true;
         }
 
         /**
@@ -425,8 +428,15 @@
          */
         function setUsuarioRole(int $codUsuario, int $role):bool
         {
- 
-            return false;
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
+
+            if(!$this->existeRole($role))
+                return false;
+
+            $this->_usuarios[$codUsuario]["cod_role"] = $role;
+
+            return true;
         }
 
         /**
@@ -437,7 +447,14 @@
          */
         function dameUsuarios():array
         {
-            return [];
+            $usuarios = [];
+
+            foreach($this->_usuarios as $clave=>$usu)
+            {
+                $usuarios[$clave] = $usu['nick'];
+            }
+
+            return $usuarios;
         }
 
         /**
