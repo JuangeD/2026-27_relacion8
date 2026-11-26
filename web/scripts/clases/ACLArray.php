@@ -120,7 +120,7 @@
          */
         function existeRole(int $codRole):bool
         {
-            return false;
+            return array_key_exists($codRole, $this->_roles);
         }
 
         /**
@@ -147,7 +147,12 @@
          */
         function getPermisoRole(int $codRole, int $numero): bool
         {
-            return false;
+            $encontrado = false;
+
+            if($this->_roles[$codRole]['permisos'][$numero])
+                $encontrado=true;
+
+            return $encontrado;
         }
 
         /**
@@ -234,7 +239,7 @@
          */
         function existeCodUsuario(int $codUsuario):bool
         {
-            return false;
+            return array_key_exists($codUsuario, $this->_usuarios);
         }
 
         /**
@@ -246,7 +251,12 @@
          */
         function existeUsuario(string $nick):bool
         {
-            return false;
+            $econtrado = false;
+
+            if(validaRango($nick, $this->_usuarios))
+                $econtrado = true;
+
+            return $econtrado;
         }
 
         /**
@@ -289,7 +299,13 @@
          */
         function getPermiso(int $codUsuario, int $numero):bool
         {
-            return false;
+            $valido = false;
+
+            if($this->existeCodUsuario($codUsuario))
+                if(validaRango($numero, $this->_roles[$this->getUsuarioRole($codUsuario)]['permisos'], 2))
+                    $valido = true;
+
+            return $valido;
         }
 
         /**

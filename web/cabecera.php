@@ -13,7 +13,7 @@ if (MODO_TRABAJO=="produccion")
         error_reporting(E_ALL);  
 
 spl_autoload_register(function ($clase){
-    $ruta=RUTABASE."/aplicacion/clases/curso2026/";
+    $ruta=RUTABASE."/scripts/clases/";
     $fichero=$ruta."$clase.php";
     
     if (file_exists($fichero))
@@ -22,7 +22,17 @@ spl_autoload_register(function ($clase){
         }
       else
         {
-            throw new Exception("La clase $clase no se ha encontrado.");
+            $ruta = RUTABASE."/aplicacion/clases/";
+            $fichero = $ruta."$clase.php";
+
+            if(file_exists($fichero))
+            {
+                require_once($fichero);
+            }
+            else
+            {
+                throw new Exception("La clase $clase no se ha encontrado.");
+            }
         }
 });
 
@@ -49,3 +59,6 @@ const COLORESFONDO = [
     "red" => ["nombre"=>"rojo"],
     "green" => ["nombre"=>"verde"]
 ];
+
+/* Inicio la sesión necesaria */
+session_start();

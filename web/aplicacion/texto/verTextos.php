@@ -1,6 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-include_once(dirname(__FILE__) . "/../clases/RegistroTexto.php");
+
 //controlador
 $barra=[
     [
@@ -15,10 +15,10 @@ $barra=[
 $textos = [];
 $errores=[];
 
-if(!isset($_COOKIE["textos"]))
-    generarCookie("textos", $textos, expiracionCookie(), "/aplicacion/texto/verTextos.php");
+if(!isset($_SESSION["textos"]))
+    $_SESSION["textos"]=$textos;
 else
-    $textos = $_COOKIE["textos"];
+    $textos = $_SESSION["textos"];
 
 /* ====== GUARDAR TEXTO ====== */
 if(isset($_POST["guardar"]))
@@ -30,8 +30,18 @@ if(isset($_POST["guardar"]))
 
 
         if(empty($errores))
+        {
             $textos[]=new RegistroTexto($_POST["texto"]);
+            $_SESSION["textos"]=$textos;
+        }       
     }
+}
+
+/* ====== LIMPIAR TEXTOS ====== */
+if(isset($_POST["limpiar"]))
+{
+    $textos = [];
+    $_SESSION["textos"] = $textos;
 }
 
 //dibuja la plantilla de la vista
@@ -39,7 +49,7 @@ inicioCabecera("pag. textos");
 cabecera();
 finCabecera();
 inicioCuerpo("PAGINA TEXTOS", $barra);
-cuerpo();  //llamo a la vista
+cuerpo($textos);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
@@ -51,17 +61,17 @@ function cabecera()
 }
 
 //vista
-function cuerpo()
+function cuerpo(array $textos)
 {
 ?>
     <br><br>
     <form action="" method="post">
         <!-- Registro de texto -->
         <input type="text" name="texto" placeholder="Introduce un texto..." width="350px" height="auto">
-        <input type="button" value="Guardar" name="guardar" class="boton">
+        <input type="submit" value="Guardar" name="guardar" class="boton">
 
         <!-- Botón para limpiar los textos -->
-        <input type="button" value="Limpiar" name="limpiar" class="boton">
+        <input type="submit" value="Limpiar" name="limpiar" class="boton">
     </form>
     <hr>
     <textarea rows="15" cols="50" readonly><?php 
