@@ -251,12 +251,16 @@
          */
         function existeUsuario(string $nick):bool
         {
-            $econtrado = false;
+            $encontrado = false;
 
-            if(validaRango($nick, $this->_usuarios))
-                $econtrado = true;
+            foreach($this->_usuarios as $usu)
+            {
+                if($usu['nick']===$nick)
+                    $encontrado = true;
+            }
 
-            return $econtrado;
+
+            return $encontrado;
         }
 
         /**

@@ -11,13 +11,41 @@ $barra=[
     ]
 ];
 
+$datos = [
+    "login" => ""
+];
+$errores = [];
+
+if(isset($_POST["iniciarSesion"]))
+{
+    $datos["login"]= $_POST["login"];
+
+    if($datos["login"]==="")
+        $errores["login"][]="El login es obligatorio";
+
+    if(!$acl->existeUsuario($datos['login']))
+        $errores["login"][]="El usuario indicado no existe";
+
+    if($_POST["contrasenia"]==="")
+        $errores["contrasenia"][]="Es necesario indicar una contraseña";
+
+    if(empty($errores))
+        if(!$acl->esValido($datos["login"], $_POST["contrasenia"]))
+            $errores["Login/contrasenia"][] = "Login/contraseña incorrectos";
+        else
+        {
+            $codUsu = $acl->getCodUsuario($datos["login"]);
+            $acceso->registrarUsuario($datos['login'], $acl->getNombre($codUsu), $acl->getPermisos($codUsu));
+        }
+
+}
 
 //dibuja la plantilla de la vista
 inicioCabecera("login");
 cabecera();
 finCabecera();
 inicioCuerpo("LOGIN", $barra);
-cuerpo();  //llamo a la vista
+cuerpo($datos, $errores);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
@@ -29,19 +57,24 @@ function cabecera()
 }
 
 //vista
-function cuerpo()
+function cuerpo(array $datos, array $errores)
 {
+
+    if(isset($errores["Login/contrasenia"]))
+        mostrarErroresLinea("Login/contrasenia", $errores, "div", true);
 ?>
     <br><br>
     <form action="" method="post">
         <!-- Login -->
         <label for="">Login:</label>
-        <input type="text" name="login" autofocus>
+        <input type="text" name="login" autofocus placeholder="Nickname" value="<?php ((!empty($errores))? $datos["login"]: "") ?>">
+        <?php if($errores) mostrarErroresLinea("login", $errores, "span", true); ?>
 
         <!-- Contraseña -->
         <br>
         <label for="">Contraseña:</label>
-        <input type="password" name="contrasenia">
+        <input type="password" name="contrasenia" placeholder="Contraseña">
+        <?php if($errores) mostrarErroresLinea("contrasenia", $errores, "span", true); ?>
 
         <br><br>
         <input type="submit" value="Iniciar sesión" name="iniciarSesion" class="boton">

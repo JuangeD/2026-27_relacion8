@@ -62,6 +62,22 @@ function inicioCuerpo(string $cabecera, array $ubicacion=[])
             </header>
             
             <div id="barraLogin">
+                <p>
+                <?php 
+                    if(!$acceso->hayUsuario())
+                        echo "Sin usuario";
+                    else
+                        echo $acceso->getNombre();
+                
+                ?>
+                </p>
+                <?php 
+                
+                    if(!$acceso->hayUsuario())
+                        echo "<a href='/aplicacion/acceso/login.php'>Iniciar sesión</a>";
+                    else
+                        echo "<a href='/aplicacion/acceso/logout.php'>Cerrar sesión</a>";
+                ?>
                 
             </div>
             <nav class="barraMenu">

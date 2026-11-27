@@ -36,7 +36,11 @@ spl_autoload_register(function ($clase){
         }
 });
 
+/* Inicio la sesión necesaria */
+session_start();
+
 include(RUTABASE."/aplicacion/plantilla/plantilla.php");
+include(RUTABASE."/scripts/librerias/funcionesVarias.php");
 include(RUTABASE."/scripts/librerias/funcionesRelacion8.php");
 
 //creo todos los objetos que necesita mi aplicación
@@ -60,5 +64,10 @@ const COLORESFONDO = [
     "green" => ["nombre"=>"verde"]
 ];
 
-/* Inicio la sesión necesaria */
-session_start();
+/* Creo los accesos */
+$acl = new ACLArray();
+$acceso = new Acceso();
+
+/* Añadir role */
+$acl->anadirRole("normal", [1=>true]);
+$acl->anadirUsuario("Juan Gerardo Díaz Hurtado", "jdiahur", "1234", $acl->getCodRole("normal"));
