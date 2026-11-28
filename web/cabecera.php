@@ -69,5 +69,5 @@ $acl = new ACLArray();
 $acceso = new Acceso();
 
 /* Añadir role */
-$acl->anadirRole("normal", [1=>true]);
-$acl->anadirUsuario("Juan Gerardo Díaz Hurtado", "jdiahur", "1234", $acl->getCodRole("normal"));
+$acl->anadirRole("usuario", [1=>false]);
+$acl->anadirUsuario("Juan Gerardo Díaz Hurtado", "jdiahur", "1234", $acl->getCodRole("usuario"));

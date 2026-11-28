@@ -180,7 +180,7 @@
 
             //la contraseña la guardo encriptada
 			//establecer el método
-            $contrasena="método encriptado";
+            $contrasena=password_hash($contrasena, PASSWORD_BCRYPT);
 
             //busco cual es el ultimo codigo
             $cont=0;

@@ -1,6 +1,20 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 //controlador
+/* Comprobar el usuario */
+if(!$acceso->hayUsuario())
+{
+    $_SESSION["request"] = $_SERVER["REQUEST_URI"];
+    header("Location: /aplicacion/acceso/login.php");
+    exit();
+}
+
+if(!$acceso->puedePermiso(1))
+{
+    paginaError("No tienes permisos suficientes para acceder a esta página");
+    exit();
+}
+
 $barra=[
     [
         "TEXTO"=>"inicio",
