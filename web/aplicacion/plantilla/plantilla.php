@@ -1,6 +1,6 @@
 <?php
 
-function paginaError($mensaje)
+function paginaError(string $mensaje)
 {
   header("HTTP/1.0 404 $mensaje");
   inicioCabecera("PRACTICA");
@@ -15,7 +15,7 @@ function paginaError($mensaje)
   finCuerpo();  
 }
 
-function inicioCabecera($titulo)
+function inicioCabecera(string $titulo)
 {
 ?>
 <!DOCTYPE html>
@@ -62,11 +62,29 @@ function inicioCuerpo(string $cabecera, array $ubicacion=[])
             </header>
             
             <div id="barraLogin">
+                <p>
+                <?php 
+                    if(!$acceso->hayUsuario())
+                        echo "Sin usuario";
+                    else
+                        echo $acceso->getNombre();
+                
+                ?>
+                </p>
+                <?php 
+                
+                    if(!$acceso->hayUsuario())
+                        echo "<a href='/aplicacion/acceso/login.php'>Iniciar sesión</a>";
+                    else
+                        echo "<a href='/aplicacion/acceso/logout.php'>Cerrar sesión</a>";
+                ?>
                 
             </div>
             <nav class="barraMenu">
                 <ul>
-                    <li><a href="/aplicacion/principal/pruebas.php">Pruebas</a></li>
+                    <li><a href="/aplicacion/texto/verTextos.php">Pag. textos</a></li>
+                    <li><a href="/aplicacion/personalizar/index.php">Visualizar colores</a></li>
+                    <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
                  </ul> 
                 
             </nav>
@@ -115,7 +133,7 @@ function finCuerpo()
                 <div>
                     &copy; Copyright by Juange
                     <?php
-                    echo " - " . date("d/m/Y H:i:s"); 
+                    echo " - " . date("d/m/Y"); 
                     ?>
                 </div>
             </footer>

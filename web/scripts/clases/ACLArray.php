@@ -120,7 +120,7 @@
          */
         function existeRole(int $codRole):bool
         {
-            
+            return array_key_exists($codRole, $this->_roles);
         }
 
         /**
@@ -147,7 +147,12 @@
          */
         function getPermisoRole(int $codRole, int $numero): bool
         {
-              
+            $permiso = false;
+
+            if(isset($this->_roles[$codRole]['permisos'][$numero]))
+                $permiso=$this->_roles[$codRole]['permisos'][$numero];
+
+            return $permiso;
         }
 
         /**
@@ -175,7 +180,7 @@
 
             //la contraseña la guardo encriptada
 			//establecer el método
-            $contrasena= método encriptado;
+            $contrasena=password_hash($contrasena, PASSWORD_BCRYPT);
 
             //busco cual es el ultimo codigo
             $cont=0;
@@ -234,7 +239,7 @@
          */
         function existeCodUsuario(int $codUsuario):bool
         {
-            
+            return array_key_exists($codUsuario, $this->_usuarios);
         }
 
         /**
@@ -246,7 +251,16 @@
          */
         function existeUsuario(string $nick):bool
         {
-               
+            $encontrado = false;
+
+            foreach($this->_usuarios as $usu)
+            {
+                if($usu['nick']===$nick)
+                    $encontrado = true;
+            }
+
+
+            return $encontrado;
         }
 
         /**
@@ -268,11 +282,8 @@
 
             //recojo cual es el codigo
             $codigo=$this->getCodUsuario($nick);
-            
-			//establecer el metodo de encriptado
-            $contrasena= metodo de encriptado;
 
-            if ($this->_usuarios[$codigo]["contrasenia"]!=$contrasena)
+            if (!password_verify($contrasena, $this->_usuarios[$codigo]["contrasenia"]))
                  return false;
                 
             // es valido
@@ -289,7 +300,13 @@
          */
         function getPermiso(int $codUsuario, int $numero):bool
         {
+            $valido = false;
 
+            if($this->existeCodUsuario($codUsuario))
+                if(validaRango($numero, $this->_roles[$this->getUsuarioRole($codUsuario)]['permisos'], 2))
+                    $valido = true;
+
+            return $valido;
         }
 
         /**
@@ -301,8 +318,10 @@
          */
         function getPermisos(int $codUsuario):array|false
         {
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
 
-
+            return $this->_roles[$this->_usuarios[$codUsuario]['cod_role']]['permisos'];
         }
 
         /**
@@ -329,8 +348,7 @@
          */
         function getBorrado(int $codUsuario):bool
         {
-
-
+            return $this->existeCodUsuario($codUsuario);
         }
 
         /**
@@ -376,7 +394,12 @@
         function setContrasenia(int $codUsuario, string $contrasenia):bool
         {
 
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
 
+            $this->_usuarios[$codUsuario]['contrasenia'] = password_hash($contrasenia, PASSWORD_BCRYPT);
+
+            return true;
         }
 
         /**
@@ -409,8 +432,15 @@
          */
         function setUsuarioRole(int $codUsuario, int $role):bool
         {
- 
+            if(!$this->existeCodUsuario($codUsuario))
+                return false;
 
+            if(!$this->existeRole($role))
+                return false;
+
+            $this->_usuarios[$codUsuario]["cod_role"] = $role;
+
+            return true;
         }
 
         /**
@@ -421,7 +451,14 @@
          */
         function dameUsuarios():array
         {
+            $usuarios = [];
 
+            foreach($this->_usuarios as $clave=>$usu)
+            {
+                $usuarios[$clave] = $usu['nick'];
+            }
+
+            return $usuarios;
         }
 
         /**

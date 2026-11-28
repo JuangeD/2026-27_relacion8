@@ -11,14 +11,11 @@ $barra=[
     ]
 ];
 
-header("Location: /aplicacion/principal/index.php");
-exit();
-
 //dibuja la plantilla de la vista
-inicioCabecera("tienda");
+inicioCabecera("relacion 8");
 cabecera();
 finCabecera();
-inicioCuerpo("TIENDA", $barra);
+inicioCuerpo("RELACIÓN 8", $barra);
 cuerpo();  //llamo a la vista
 finCuerpo();
 // **********************************************************
